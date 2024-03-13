@@ -1,4 +1,5 @@
 import "./App.css";
+import AddToCartForm from "./components/AddToCartForm";
 import Joke from "./components/Joke";
 import Message from "./components/Message";
 import PostForm from "./components/PostForm";
@@ -16,7 +17,9 @@ function App() {
       {/* <Theme/> */}
       {/* <PostForm/> */}
       {/* <ShoppingCart/> */}
-      <PostForm2/>
+      {/* <PostForm2/> */}
+      <AddToCartForm itemID='1' itemTitle="JavaScript > The Definitive Guide"/>
+      <AddToCartForm itemID='2' itemTitle="JavaScript > The Good Parts"/>
     </div>
   );
 }
