@@ -1,9 +1,25 @@
-// import React from "react";
-
 import { useState } from "react";
 
+import { useFormStatus } from "react-dom";
+
+//post form Button component
+const SubmitButton = () => {
+  const { pending } = useFormStatus();
+  console.log("pending:", pending);
+  return (
+    <button
+      className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-3 py-2 rounded focus:outline-none foucus:shadow-outline"
+      type="submit"
+      disabled={pending}
+    >
+      {pending ? "Submitting..." : "Submit"}
+    </button>
+  );
+};
 const PostForm = ({ addPost }) => {
-  const formAction = (formData) => {
+  const formAction = async (formData) => {
+    //Simulate delay of 2s
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     const newPost = {
       title: formData.get("title"),
       body: formData.get("body"),
@@ -46,40 +62,34 @@ const PostForm = ({ addPost }) => {
         ></textarea>
       </div>
       <div className="flex items-center justify-between">
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-3 py-2 rounded focus:outline-none foucus:shadow-outline"
-          type="submit"
-        >
-          Submit
-        </button>
+        <SubmitButton />
       </div>
     </form>
   );
 };
 
 const Post1 = () => {
-    const [posts,setPosts]=useState([]);
-    const addPost=(newPost)=>{
-        setPosts((posts)=>[...posts,newPost])
-    }
+  const [posts, setPosts] = useState([]);
+  const addPost = (newPost) => {
+    setPosts((posts) => [...posts, newPost]);
+  };
   return (
     <>
-      <PostForm addPost={addPost}/>
-      {posts.map((post,ind)=>(
+      <PostForm addPost={addPost} />
+      {posts.map((post, ind) => (
         <PostItem key={ind} post={post} />
       ))}
     </>
   );
 };
 
-const PostItem=({post})=>{
-
-    return(
-        <div className="bg-blue-50 shadow-md p-4 my-6 rounded-lg ">
-        <h2 className="text-xl font-bold">{post.title}</h2>
-        <p>{post.body}</p>
-      </div>
-    )
-}
+const PostItem = ({ post }) => {
+  return (
+    <div className="bg-blue-50 shadow-md p-4 my-6 rounded-lg ">
+      <h2 className="text-xl font-bold">{post.title}</h2>
+      <p>{post.body}</p>
+    </div>
+  );
+};
 
 export default Post1;
